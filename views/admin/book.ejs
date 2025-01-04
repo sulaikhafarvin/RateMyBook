@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+    src="https://kit.fontawesome.com/85a4892d2f.js"
+    crossorigin="anonymous"
+  ></script>
+    <title><%= book.title %> - Details</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #19aa8d;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .book-details-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .book-details {
+        text-align: center;
+        position: relative;
+      }
+
+      .edit-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #19aa8d;
+        text-decoration: none;
+      }
+
+      .edit-icon svg {
+        width: 24px;
+        height: 24px;
+        fill: #19aa8d;
+        transition: transform 0.3s;
+      }
+
+      .edit-icon:hover svg {
+        transform: scale(1.1);
+        fill: #138b71;
+      }
+
+      .book-details img {
+        max-width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .book-details h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .book-details p {
+        color: #555;
+        font-size: 18px;
+        text-align: justify;
+        line-height: 1.6;
+        padding: 15px;
+        background-color: #fafafa;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .rating-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .rating-value {
+        font-size: 24px;
+        color: #19aa8d;
+        font-weight: bold;
+      }
+
+      .review-section {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #f1f1f1;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 700px;
+        margin-left: 32px;
+      }
+
+      .review-section h3 {
+        color: #19aa8d;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .reviews-list {
+        margin-top: 20px;
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .review-item {
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-item p {
+        font-size: 16px;
+        color: #555;
+      }
+
+      .review-item .review-author {
+        font-weight: bold;
+        color: #19aa8d;
+      }
+
+      /* New Buy Now Button Style */
+      .buy-now-button {
+        display: inline-block;
+        background-color: #19aa8d;
+        color: white;
+        padding: 10px 20px;
+        font-size: 18px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .buy-now-button:hover {
+        background-color: #138b71;
+        transform: scale(1.05);
+      }
+      .home-icon {
+        position: absolute;
+        top: 70px;
+        left: 100px;
+        text-decoration: none;
+        color: #007bff;
+        font-size: 24px;
+        transition: color 0.3s;
+      }
+
+      .home-icon:hover {
+        color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/admin/books" class="home-icon">
+      <i class="fas fa-arrow-left"></i> </a>
+    <h1><%= book.title %></h1>
+    <div class="book-details-container">
+      <div class="book-details">
+        <img
+          src="<%= book.coverImage || '/images/placeholder.png' %>"
+          alt="<%= book.title %>"
+        />
+        <!-- Updated Edit Icon -->
+        <a href="/admin/books/<%= book._id %>/edit" class="edit-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M14.06 3.94a2.5 2.5 0 013.54 0l2.46 2.46a2.5 2.5 0 010 3.54l-9.68 9.68a2 2 0 01-.78.48l-5.26 1.75a.5.5 0 01-.63-.63l1.75-5.26a2 2 0 01.48-.78l9.68-9.68zm-1.59 2.12L4.97 13.57l-.92 2.75 2.75-.92 7.5-7.5-2.83-2.83zm1.41-1.41l2.83 2.83 1.17-1.17a1.5 1.5 0000-2.12l-2.46-2.46a1.5 1.5 0 00-2.12 0l-1.17 1.17z"
+            />
+          </svg>
+        </a>
+        <h2><%= book.title %></h2>
+
+        <!-- New genre and author sections -->
+        <p><strong>Author:</strong> <%= book.author %></p>
+        <p><strong>Genre:</strong> <%= book.genre %></p>
+
+        <p><%= book.description %></p>
+
+        <div class="rating-section">
+          <h3>Average Rating</h3>
+          <% if (book.ratings && book.ratings.length > 0) { %>
+            <p>
+              <strong>
+                <%= (book.ratings.reduce((a, b) => a + b, 0) / book.ratings.length).toFixed(1) %>/5
+              </strong>
+              based on <%= book.ratings.length %> ratings
+            </p>
+          <% } else { %>
+            <p>No ratings yet. Be the first to rate this book!</p>
+          <% } %>
+        </div>
+        
+
+      <!-- Buy Now Button -->
+      <a href="<%= book.buyLink %>" target="_blank" class="buy-now-button">Buy Now</a>
+
+      <!-- Review Section -->
+      <div class="review-section">
+        <h3>Reviews</h3>
+
+        <!-- Existing Reviews -->
+        <ul class="reviews-list">
+          <% if (book.reviews && book.reviews.length > 0) { %>
+            <% book.reviews.forEach((review) => { %>
+              <li class="review-item">
+                <p class="review-author"><%= review.username %></p>
+                <p><%= review.reviewText %></p>
+                
+              </li>
+            <% }) %>
+          <% } else { %>
+            <p>No reviews yet. Be the first to review this book!</p>
+          <% } %>
+        </ul>
+        
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RateMyBook - Email Verified</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: black;
+       
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border-color: black;
+        color: black;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .home-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: rgb(221, 176, 28);
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .home-button:hover {
+        background-color: rgb(203, 159, 15);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .check-icon {
+        font-size: 50px;
+        color: #66d9a0;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="check-icon">✔️</div>
+      <h2>Your Email has been verified</h2>
+      <p>
+        Thank you for verifying your email. You can now access all the features.
+      </p>
+      <a href="/user/login" class="home-button">Go to Login Page</a>
+    </div>
+  </body>
+</html>

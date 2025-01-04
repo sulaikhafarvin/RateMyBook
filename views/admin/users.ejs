@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      src="https://kit.fontawesome.com/85a4892d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Users</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+
+      h1,
+      h3 {
+        text-align: center;
+        color: #19aa8d;
+        margin-top: 20px;
+      }
+
+      .user-list {
+        max-width: 800px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 90%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 8px;
+        background-color: white;
+      }
+
+      .user-list th,
+      .user-list td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .user-list th {
+        background-color: #19aa8d;
+        color: white;
+        font-weight: bold;
+      }
+
+      .user-list tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      .ban-btn {
+        padding: 8px 12px;
+        background-color: #ff5c5c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .ban-btn:hover {
+        background-color: #e04848;
+      }
+
+      .active {
+        color: #19aa8d;
+        font-weight: bold;
+      }
+
+      .inactive {
+        color: #ff5c5c;
+        font-weight: bold;
+      }
+      .home-icon {
+        position: absolute;
+        top: 70px;
+        left: 100px;
+        text-decoration: none;
+        color: #007bff;
+        font-size: 24px;
+        transition: color 0.3s;
+      }
+      .home-icon:hover {
+        color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/admin/home" class="home-icon">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <br />
+    <br />
+    <table class="user-list">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((user, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td>
+            <% if (user.is_active) { %>
+            <span class="active">Active</span>
+            <% } else { %>
+            <span class="inactive">Banned</span>
+            <% } %>
+          </td>
+          <td>
+            <% if (user.is_active) { %>
+            <form
+              method="POST"
+              action="/admin/ban-user/<%= user._id %>"
+              style="display: inline"
+            >
+              <button type="submit" class="ban-btn">Ban</button>
+            </form>
+            <% } else { %>
+            <form
+              method="POST"
+              action="/admin/activate-user/<%= user._id %>"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                class="ban-btn"
+                style="background-color: #19aa8d"
+              >
+                Activate
+              </button>
+            </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>

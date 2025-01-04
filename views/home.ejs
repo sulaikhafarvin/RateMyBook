@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/85a4892d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="/favicon.ico" />
+
+    <title>RateMyBook - Home</title>
+
+    <style>
+      /* Global styles */
+      body {
+        font-family: "schoolbell";
+        background-color: black;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        color: rgb(221, 176, 28); /* Updated color */
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin-left: 50px;
+        margin-right: 50px;
+        padding-top: 20px;
+      }
+      .profile-div {
+        background-color: #fff;
+        width: 800px;
+        height: 65px;
+        border: 1px solid rgb(128, 123, 123);
+        border-radius: 35px;
+        margin-top: 20px;
+        margin-left: 300px;
+        position: sticky;
+        top: 10px; /* Sticks the element to the top of the viewport */
+        z-index: 100; /* Ensures it stays above other content */
+      }
+
+      .profile-section {
+        text-align: right;
+        position: absolute;
+        left: 710px;
+        top: 8px;
+      }
+
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s;
+        border: 1px solid rgb(65, 64, 64);
+      }
+
+      .profile-pic:hover {
+        transform: scale(1.1);
+      }
+      .profile-icon {
+        font-size: 35px; /* Adjust size as needed */
+        color: #aaa; /* Gray color for the icon */
+      }
+
+      .books-section {
+        grid-column: 1;
+        margin-top: 25px;
+        padding-top: 20px;
+        background-color: #fff;
+        width: 950px;
+        border-radius: 8px;
+        border: 1px solid rgb(81, 80, 80);
+        background-color: black;
+      }
+
+      .book-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 20px;
+        width: 850px;
+        margin-left: 40px;
+      }
+
+      .book-item {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgb(81, 80, 80);
+        text-align: center;
+        transition: transform 0.3s;
+        cursor: pointer;
+      }
+
+      .book-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .book-item img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        margin-bottom: 15px;
+      }
+
+      .right-section {
+        position: sticky;
+        top: 24px; /* Ensure to set a top offset */
+        margin-left: 230px;
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 450px;
+        height: 770px;
+        border-radius: 8px;
+        border: 1px solid rgb(81, 80, 80);
+        background-color: black;
+      }
+      .most-rated,
+      .most-reviewed {
+        background-color: black;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgb(81, 80, 80);
+        text-align: center;
+        height: 340px; /* Increased height */
+        width: 400px;
+        transition: transform 0.3s;
+        cursor: pointer;
+        /* margin-left: 270px;
+        margin-top: 48px;
+        margin-bottom: -10px; */
+        margin-left: 25px;
+      }
+      #most-rated-book {
+        margin-top: 25px;
+      }
+      #most-reviewed-book {
+        margin-bottom: 20px;
+      }
+      .most-rated img,
+      .most-reviewed img {
+        width: 150px; /* Adjust image size */
+        height: 250px;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+
+      .most-rated:hover,
+      .most-reviewed:hover {
+        transform: scale(1.05);
+      }
+
+      .most-rated h4,
+      .most-reviewed h4 {
+        font-size: 18px;
+        margin: 10px 0;
+      }
+
+      .most-rated p,
+      .most-reviewed p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .search-section {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        margin-top: -5px;
+      }
+
+      .search-input {
+        width: 500px;
+        padding: 10px;
+        border-radius: 35px;
+        border: 1px solid #ccc;
+        margin-top: -3px;
+      }
+
+      .search-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 18px; /* Adjust size of the icon */
+        color: rgb(221, 176, 28); /* Adjust color of the icon */
+        padding: 5px;
+        transition: color 0.3s;
+      }
+
+      .search-btn:hover {
+        color: rgb(221, 176, 28); /* Icon color on hover */
+      }
+      .book-h2 {
+        margin-left: 40px;
+        margin-bottom: 40px;
+        font-size: 30px;
+      }
+      .schoolbell-regular {
+        font-family: "Schoolbell", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      .home-icon {
+        margin-left: 50px;
+        position: absolute;
+        left: 2px;
+        top: 11px;
+        font-size: 32px;
+        color: rgb(221, 176, 28);
+        border: 1px solid (221, 176, 28);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a
+        href="/user/logout"
+        style="
+          height: 30px;
+          width: 30px;
+          position: absolute;
+          left: 1430px;
+          margin-top: 20px;
+        "
+        ><i
+          class="fa-solid fa-right-from-bracket"
+          style="font-size: 29px; color: white"
+        ></i
+      ></a>
+      <div class="profile-div">
+        <!-- Add Search Bar at the top of the books section -->
+        <a href="#" class="home-icon"><i class="fa-solid fa-house"></i></a>
+        <div class="search-section">
+          <form action="/user/home" method="GET">
+            <input
+              type="text"
+              name="search"
+              placeholder="Search for books..."
+              value="<%= searchQuery || '' %>"
+              class="search-input"
+            />
+            <!-- <button type="submit" class="search-btn">Search</button> -->
+            <button type="submit" class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </div>
+        <!-- Profile Picture -->
+        <div class="profile-section">
+          <a href="/user/profile" title="Edit Profile">
+            <% if (user.profilePicture) { %>
+            <!-- Show uploaded profile picture -->
+            <img
+              src="<%= user.profilePicture %>"
+              alt="Profile Picture"
+              class="profile-pic"
+            />
+            <% } else { %>
+            <!-- Show Font Awesome icon -->
+            <i class="fa-solid fa-user profile-icon"></i>
+            <% } %>
+          </a>
+        </div>
+      </div>
+      <!-- Left Section - Books Listing -->
+
+      <div class="books-section">
+        <h2 class="book-h2">Explore and Rate Books</h2>
+        <div class="book-list">
+          <% books.forEach(book => { %>
+          <div
+            class="book-item"
+            onclick="window.location.href='/user/book/<%= book._id %>'"
+          >
+            <img
+              src="<%= book.coverImage || '/default-book.png' %>"
+              alt="<%= book.title %>"
+            />
+          </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- Right Section - Profile, Most Rated, and Most Reviewed -->
+      <div class="right-section">
+        <!-- <%
+         let mostReviewedHref = mostReviewedBook ?
+        `/user/book/${mostReviewedBook._id}` : null; 
+        
+        
+        let mostRatedHref =
+        mostRatedBook ? `/user/book/${mostRatedBook._id}` : null; 
+        %> -->
+        <!-- Most Rated Book -->
+        <div
+          id="most-rated-book"
+          class="most-rated"
+          onclick="window.location.href='/user/book/<%= mostRatedBook._id %>'"
+        >
+          <h2>Most Rated Book</h2>
+          <% if (mostRatedBook) { %>
+          <img
+            src="<%= mostRatedBook.coverImage || '/default-book.png' %>"
+            alt="<%= mostRatedBook.title %>"
+          />
+          <!-- <h4><%= mostRatedBook.title %></h4> -->
+          <% } else { %>
+          <p>No rated books available.</p>
+          <% } %>
+        </div>
+        <!-- rate div  -->
+
+        <!-- Most Reviewed Book -->
+        <div
+          id="most-reviewed-book"
+          class="most-reviewed"
+          onclick="window.location.href='/user/book/<%= mostReviewedBook._id %>'"
+        >
+          <h2>Most Reviewed Book</h2>
+          <% if (mostReviewedBook) { %>
+          <img
+            src="<%= mostReviewedBook.coverImage || '/default-book.png' %>"
+            alt="<%= mostReviewedBook.title %>"
+          />
+          <!-- <h4><%= mostReviewedBook.title %></h4> -->
+          <% } else { %>
+          <p>No reviewed books available.</p>
+          <% } %>
+        </div>
+        <!-- review div  -->
+      </div>
+    </div>
+  </body>
+</html>

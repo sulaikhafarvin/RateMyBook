@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/85a4892d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <title><%= book.title %> - Book Details</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: black;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        height: 630px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: black;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        display: flex;
+        gap: 20px;
+      }
+
+      .left-section {
+        /* flex: 1; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .left-section img {
+        width: 90%;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+
+      .right-section {
+        flex: 2;
+        position: relative;
+        margin-left: 20px;
+      }
+      .rate-review-section {
+        margin-top: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        gap: 125px;
+        margin-right: 50px;
+      }
+      a {
+        text-decoration: none;
+      }
+      h1 {
+        color: rgb(221, 176, 28);
+        margin-top: 10px;
+        font-size: 25px;
+      }
+
+      h4 {
+        margin-bottom: 8px;
+      }
+
+      .book-details p {
+        font-size: 16px;
+        color: white;
+        line-height: 1.6;
+      }
+
+      .buy-button {
+        display: block;
+        margin-top: 30px;
+        background-color: rgb(221, 176, 28);
+        color: #fff;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
+        max-width: 200px;
+      }
+
+      .buy-button:hover {
+        background-color: rgb(136, 106, 5);
+      }
+
+      .actions {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .book-section {
+        margin-top: 130px;
+      }
+
+      .your-rate-keyword {
+        margin-left: 10px;
+      }
+
+      /* Modal */
+      /* Modal Styles */
+      .rate-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .rate-stars {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin: 20px 0;
+      }
+
+      .rate-stars span {
+        font-size: 40px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .rate-stars span.selected {
+        color: #ffcc00;
+      }
+
+      .home-icon {
+        margin-left: 80px;
+        position: absolute;
+        top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/user/home" class="home-icon">
+      <i class="fas fa-arrow-left" style="font-size: 20px; color: white"></i>
+    </a>
+    <div class="container">
+      <!-- Left Section: Cover Image -->
+      <div class="left-section">
+        <h1><%= book.title %></h1>
+        <img
+          src="<%= book.coverImage || '/default-book.png' %>"
+          alt="<%= book.title %>"
+        />
+      </div>
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <div class="rate-review-section">
+          <div class="rate-div">
+            <h4 style="color: rgb(221, 176, 28)">RateMyBook Rating</h4>
+            <span
+              style="
+                font-size: 17px;
+                font-weight: bold;
+                margin-left: 60px;
+                color: white;
+              "
+            >
+              <%= averageRatingPercentage %>%
+            </span>
+          </div>
+
+          <div class="your-rate-div">
+            <h4 style="color: rgb(221, 176, 28)">Your Rating</h4>
+            <% if (userRating) { %>
+            <!-- Show the user's rating -->
+            <div class="user-rating" style="margin-left: -15px">
+              <% for (let i = 1; i <= 5; i++) { %>
+              <i
+                class="<%= i <= userRating.score ? 'fa-solid fa-star' : 'fa-regular fa-star' %>"
+                style="font-size: 17px; padding-right: 5px; color: #ffcc00"
+              ></i>
+              <% } %>
+            </div>
+            <% } else { %>
+            <!-- Show the Rate button if the user has not rated -->
+            <a
+              href="javascript:void(0)"
+              class="your-rate-keyword"
+              style="font-size: 17px; color: white"
+              onclick="openRateModal()"
+            >
+              <i
+                class="fa-regular fa-star"
+                style="font-size: 17px; padding-right: 9px; color: white"
+              ></i>
+              Rate
+            </a>
+            <% } %>
+          </div>
+
+          <!-- Modal -->
+          <div id="rateModal" class="rate-modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeRateModal()">&times;</span>
+              <h2>Rate this Book</h2>
+              <form
+                id="rateForm"
+                action="/user/rate/<%= book._id %>"
+                method="POST"
+              >
+                <input type="hidden" name="score" id="ratingValue" value="0" />
+                <div class="rate-stars">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                  <span data-value="<%= i %>" onclick="selectRating(<%= i %>)"
+                    >★</span
+                  >
+                  <% } %>
+                </div>
+                <button
+                  type="submit"
+                  class="rate-button"
+                  style="background-color: rgb(221, 176, 28)"
+                >
+                  Rate
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="user-review-div">
+            <h4 style="color: rgb(221, 176, 28)">User Reviews</h4>
+            <a href="/user/reviews/<%= book._id %>"
+              ><i
+                class="fa-solid fa-pen-to-square"
+                style="margin-left: 40px; color: white"
+              ></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="book-section">
+          <!-- Book Details -->
+          <div class="book-details">
+            <p class="book-author">
+              <strong>Author:</strong> <%= book.author %>
+            </p>
+            <p style="margin-top: 30px">
+              <strong class="book-genre">Genre:</strong> <%= book.genre %>
+            </p>
+            <p style="margin-top: 30px"><%= book.description %></p>
+            <% if (book.buyLink) { %>
+            <a href="<%= book.buyLink %>" target="_blank" class="buy-button"
+              >Buy this Book</a
+            >
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openRateModal() {
+        document.getElementById("rateModal").style.display = "flex";
+      }
+
+      function closeRateModal() {
+        document.getElementById("rateModal").style.display = "none";
+      }
+
+      function selectRating(score) {
+        const stars = document.querySelectorAll(".rate-stars span");
+        const ratingValue = document.getElementById("ratingValue");
+
+        stars.forEach((star, index) => {
+          if (index < score) {
+            star.classList.add("selected");
+          } else {
+            star.classList.remove("selected");
+          }
+        });
+
+        // Set the hidden input value for form submission
+        ratingValue.value = score;
+      }
+    </script>
+  </body>
+</html>

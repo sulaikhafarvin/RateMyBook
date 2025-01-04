@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/85a4892d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Books</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+        text-align: center;
+      }
+
+      h1 {
+        color: #19aa8d;
+        margin-bottom: 40px;
+        margin-top: 50px;
+      }
+
+      .create-book {
+        display: inline-block;
+        position: absolute;
+        background-color: #19aa8d;
+        color: white;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        top: 50px;
+        left: 1420px;
+      }
+
+      .create-book:hover {
+        background-color: #138b71;
+      }
+
+      .books-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 95px;
+        margin-top: 90px;
+      }
+
+      .book-card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 200px;
+        text-align: center;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        color: black;
+      }
+
+      .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* .book-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 5px;
+      } */
+      .book-card img {
+        width: 100%;
+        height: 250px; /* Height adjusted to fit your layout */
+        object-fit: cover; /* Ensures the image maintains its aspect ratio */
+        border-radius: 5px;
+      }
+
+      .book-card h3 {
+        font-size: 18px;
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .home-icon {
+        position: absolute;
+        top: 70px;
+        left: 100px;
+        text-decoration: none;
+        color: #007bff;
+        font-size: 24px;
+        transition: color 0.3s;
+      }
+
+      .home-icon:hover {
+        color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/admin/home" class="home-icon">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <h1>Books</h1>
+
+    <!-- Create book button -->
+    <a href="/admin/books/create" class="create-book">+</a>
+
+    <!-- Books container -->
+    <div class="books-container">
+      <% if (books.length > 0) { %> <% books.forEach((book) => { %>
+      <a href="/admin/books/<%= book._id %>" class="book-card">
+        <img
+          src="<%= book.coverImage || '/images/placeholder.png' %>"
+          alt="<%= book.title %>"
+        />
+
+        <h3><%= book.title %></h3>
+      </a>
+      <% }) %> <% } else { %>
+      <p>No books available. Click the "+" icon to create a new book.</p>
+      <% } %>
+    </div>
+  </body>
+</html>

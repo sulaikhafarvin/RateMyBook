@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/85a4892d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>RateMyBook - Users Review</title>
+    <style>
+      /* Styling for the review section and modal */
+      body {
+        background-color: black;
+      }
+      .user-reviews-section {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: black;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-reviews-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .review-card {
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+      }
+
+      .review-username {
+        font-size: 1.2em;
+        color: #0073e6;
+        margin: 0;
+      }
+
+      .review-date {
+        font-size: 0.9em;
+        color: #777;
+      }
+
+      .review-content {
+        font-size: 1em;
+        color: #444;
+      }
+
+      .no-reviews-message {
+        text-align: center;
+        font-size: 1.2em;
+        color: #777;
+        margin-top: 20px;
+      }
+
+      .add-review-button {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #0073e6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 90%;
+        max-width: 500px;
+      }
+
+      .close-modal {
+        float: right;
+        font-size: 18px;
+        color: #333;
+        cursor: pointer;
+        margin-top: -10px;
+        margin-right: -10px;
+      }
+
+      .modal-title {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .review-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .review-textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        resize: none;
+        outline: none;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-textarea:focus {
+        border-color: #0073e6;
+        box-shadow: 0 0 5px rgba(0, 115, 230, 0.3);
+      }
+
+      .submit-button {
+        background-color: #0073e6;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-button:hover {
+        background-color: #005bb5;
+      }
+
+      .delete-button {
+        background-color: #e63946;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+      .home-icon {
+        margin-left: 120px;
+        position: absolute;
+        top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/user/book/<%= book._id %>" class="home-icon">
+      <i class="fas fa-arrow-left" style="font-size: 20px; color: white"></i>
+    </a>
+    <div class="user-reviews-section">
+      <h2>User Reviews</h2>
+
+      <!-- + Review Button -->
+      <% if (!userHasReviewed) { %>
+      <button class="add-review-button" id="openModal">+ Review</button>
+      <% } %> <% if (reviews.length > 0) { %> <% reviews.forEach((review) => {
+      %>
+      <div class="review-card">
+        <div class="review-header">
+          <h4 class="review-username"><%= review.userId.username %></h4>
+          <p class="review-date">
+            Posted on <%= new Date(review.createdAt).toLocaleDateString() %>
+          </p>
+        </div>
+        <div class="review-content">
+          <p><%= review.text %></p>
+          <% if (review.userId && review.userId._id.toString() ===
+          user.id.toString()) { %>
+          <!-- <button
+            class="delete-button"
+            onclick="deleteReview('<%= review._id %>')"
+          >
+            Delete
+          </button> -->
+          <form
+            action="/user/reviews/delete/<%= review._id %>?_method=DELETE"
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this review?')"
+            style="display: inline"
+          >
+            <button class="delete-button" type="submit">Delete</button>
+          </form>
+
+          <% } %>
+        </div>
+      </div>
+      <% }); %> <% } else { %>
+      <p class="no-reviews-message">
+        No reviews yet. Be the first to write a review!
+      </p>
+      <% } %>
+    </div>
+
+    <!-- Modal -->
+    <!-- <div class="modal-overlay" id="modalOverlay"></div> -->
+    <div class="modal" id="reviewModal">
+      <span class="close-modal" id="closeModal">x</span>
+      <h3 class="modal-title">Write a Review</h3>
+      <form
+        class="review-form"
+        action="/user/reviews/<%= book._id %>"
+        method="POST"
+      >
+        <textarea
+          name="text"
+          class="review-textarea"
+          rows="5"
+          cols="40"
+          placeholder="Write your review here..."
+          required
+        ></textarea>
+        <button class="submit-button" type="submit">Submit</button>
+      </form>
+    </div>
+    <script>
+      const openModalButton = document.getElementById("openModal");
+      const closeModalButton = document.getElementById("closeModal");
+      const modal = document.getElementById("reviewModal");
+      const overlay = document.getElementById("modalOverlay");
+
+      if (openModalButton) {
+        openModalButton.addEventListener("click", () => {
+          modal.style.display = "block";
+          overlay.style.display = "block";
+        });
+      }
+
+      closeModalButton.addEventListener("click", () => {
+        modal.style.display = "none";
+        overlay.style.display = "none";
+      });
+
+      overlay.addEventListener("click", () => {
+        modal.style.display = "none";
+        overlay.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
