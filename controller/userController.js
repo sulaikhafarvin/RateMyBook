@@ -37,7 +37,7 @@ const sendVerifyMail = async (username, email, user_id) => {
       html:
         "<p> Hi " +
         username +
-        ', Please click here to <a href="http://localhost:3011/user/verify?id=' +
+        ', Please click here to <a href="https://ratemybook.onrender.com/user/verify?id=' +
         user_id +
         '">Verify</a> your email.</p>',
     };
@@ -205,7 +205,7 @@ export const forgetPassword = async (req, res) => {
         html: `
           <p>Hi ${user.username},</p>
           <p>You requested to reset your password. Please click the link below to reset it:</p>
-          <a href="http://localhost:3011/user/reset-password?token=${token}" >Reset Password</a>
+          <a href="https://ratemybook.onrender.com/user/reset-password?token=${token}" >Reset Password</a>
           <p>If you didn't request this, please ignore this email.</p>
         `,
       };
